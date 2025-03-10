@@ -46,6 +46,7 @@ import getBtcBalance from "@/actions/get-btc-balance";
 import { useDepositStatus } from "@/hooks/use-deposit-status";
 import { useEmilyDeposit } from "@/util/use-emily-deposit";
 import { sendBTCFordefi } from "../util/wallet-utils/src/sendBTC";
+import { useValidateDepositAmount } from "@/hooks/use-validate-deposit-amount";
 
 /*
   deposit flow has 3 steps
@@ -95,26 +96,11 @@ const DepositFlowAmount = ({
   const minDepositAmount = perDepositMinimum / 1e8;
   const isMintCapReached = currentCap <= 0;
 
-  const validationSchema = useMemo(
-    () =>
-      yup.object({
-        amount: yup
-          .number()
-          // dust amount is in sats
-          .min(
-            minDepositAmount,
-            `Minimum deposit amount is ${minDepositAmount} BTC`,
-          )
-          .max(
-            Math.min(btcBalance, maxDepositAmount),
-            btcBalance < maxDepositAmount
-              ? `The deposit amount exceeds your current balance of ${btcBalance} BTC`
-              : `Current deposit cap is ${maxDepositAmount} BTC`,
-          )
-          .required(),
-      }),
-    [btcBalance, maxDepositAmount, minDepositAmount],
-  );
+  const validationSchema = useValidateDepositAmount({
+    btcBalance,
+    maxDepositAmount,
+    minDepositAmount,
+  });
   const handleSubmit = async (value: string | undefined) => {
     if (value) {
       const sats = Math.floor(Number(value) * 1e8);

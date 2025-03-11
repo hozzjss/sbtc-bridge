@@ -12,7 +12,6 @@ import {
   bytesToHex as uint8ArrayToHexString,
   hexToBytes as hexToUint8Array,
 } from "@stacks/common";
-import * as yup from "yup";
 import {
   createDepositAddress,
   createDepositScript,

@@ -9,6 +9,7 @@ import { queryClient } from "@/query/client";
 import { useEffect } from "react";
 import { bridgeConfigAtom } from "@/util/atoms";
 import { AsignaSignActionModals } from "@asigna/btc-connect";
+import { AsignaSignActionModals as StxConnectActionModals } from "@asigna/stx-connect";
 
 export default function LayoutClient({
   children,
@@ -29,6 +30,7 @@ export default function LayoutClient({
         <RenderNotifications />
         {children}
         <AsignaSignActionModals />
+        <StxConnectActionModals />
       </QueryClientProvider>
     </Provider>
   );

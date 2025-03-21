@@ -25,7 +25,8 @@ export default function LayoutClientReskin({
         <div className="flex flex-col w-full h-screen">
           <Header />
           <NavTabs />
-          {children}
+          {/* leave a space for the bottom nav tabs in mobile */}
+          <div className="mb-20 md:mb-0 h-full flex flex-col">{children}</div>
           <Footer />
         </div>
       </main>
